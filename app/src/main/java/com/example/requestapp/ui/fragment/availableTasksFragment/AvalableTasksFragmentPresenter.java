@@ -1,0 +1,54 @@
+package com.example.requestapp.ui.fragment.availableTasksFragment;
+
+import com.example.requestapp.Utils.Config;
+import com.example.requestapp.database.Database;
+import com.example.requestapp.iterator.Lisner;
+import com.example.requestapp.model.AvailableTasks;
+import com.example.requestapp.model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AvalableTasksFragmentPresenter extends Lisner implements AvalableTasksFragmentContract.Presenter {
+
+    private AvailableTasksFragment view;
+    private Database database;
+    private AvailableTasks availableTasks;
+
+    public AvalableTasksFragmentPresenter(AvailableTasksFragment view) {
+        this.view = view;
+        database=new Database();
+        database.setLisner(this);
+        availableTasks=new AvailableTasks();
+        setListTasks();
+    }
+
+    private void setListTasks(){
+        database.getListTask(view.nick,Config.LOW);
+        database.getListTask(view.nick,Config.MEDIUM);
+        database.getListTask(view.nick,Config.HIGH);
+    }
+    private List<Task> getTaskList(String type, List<String> desryptions){
+        List<Task> tasks =new ArrayList<>();
+        for(String d:desryptions){
+            tasks.add(new Task(type,d));
+        }
+        return tasks;
+    }
+
+    @Override
+    public void setList(String type, List< String > listTasks) {
+        availableTasks.setList(type,listTasks);
+        setViewList();
+    }
+
+    private void setViewList(){
+        if(!availableTasks.getList(Config.LOW).isEmpty())
+             view.setListLow(getTaskList(Config.LOW,availableTasks.getList(Config.LOW)));
+        if(!availableTasks.getList(Config.MEDIUM).isEmpty())
+            view.setListMedium(getTaskList(Config.MEDIUM,availableTasks.getList(Config.MEDIUM)));
+        if(!availableTasks.getList(Config.HIGH).isEmpty())
+            view.setListHigh(getTaskList(Config.HIGH,availableTasks.getList(Config.HIGH)));
+    }
+
+}
