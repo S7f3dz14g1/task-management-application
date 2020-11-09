@@ -20,4 +20,8 @@
     <string name="proflie">Proflie</string>
     <string name="task">Task</string>
     <string name="nick">Nick</string>
+    <string name="finish">Finish</string>
+    <string name="again">Do it again</string>
+    <string name="descryption">Descryption</string>
+    <string name="end_date">End date:</string>
 </resources>

@@ -24,7 +24,6 @@ public class AddTaskFragment extends AppCompatDialogFragment implements AddTaskF
     private RadioGroup radioGroup;
     private Button add;
     private RadioButton radioButton;
-    String nick;
 
     private AddTaskFragmentContract.Presenter presenter;
 
@@ -34,7 +33,6 @@ public class AddTaskFragment extends AppCompatDialogFragment implements AddTaskF
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=getActivity().getLayoutInflater();
         final View view=inflater.inflate(R.layout.fragment_add_task,null);
-        nick=getActivity().getIntent().getStringExtra(Config.NICKNAME_NODE);
         builder.setView(view);
         builder.setTitle("Add new task");
         builder.setCancelable(true);
@@ -45,7 +43,7 @@ public class AddTaskFragment extends AppCompatDialogFragment implements AddTaskF
             @Override
             public void onClick(View v) {
                 radioButton=view.findViewById(radioGroup.getCheckedRadioButtonId());
-                presenter.onAddTaskClicked(new Task(getActivity().getIntent().getStringExtra(Config.NICKNAME_NODE),radioButton.getText().toString(),descryption.getText().toString()));
+                presenter.onAddTaskClicked(new Task(radioButton.getText().toString(),descryption.getText().toString()));
             }
         });
 

@@ -2,71 +2,87 @@ package com.example.requestapp.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.requestapp.Utils.Config;
 import com.example.requestapp.database.Database;
 import com.example.requestapp.iterator.Lisner;
+import com.example.requestapp.model.ConnectionHelper;
+import com.example.requestapp.model.StringHelper;
 import com.example.requestapp.model.User;
 import com.example.requestapp.ui.fragment.TaskActivity;
 
 
-public class LoginActivityPresenter extends Lisner implements LoginActivityContract.Presenter{
+public class LoginActivityPresenter extends Lisner implements LoginActivityContract.Presenter {
 
-    private LoginActivity view;
+    private LoginActivityContract.View view;
     private Database database;
+    private User user;
+    private Context context;
 
-    public LoginActivityPresenter(LoginActivity view) {
+    public LoginActivityPresenter(LoginActivityContract.View view) {
         this.view = view;
-        database=new Database();
-        database.setLisner(this);
+        user = new User();
+        database = new Database();
     }
 
-
     @Override
-    public void onLoginClicked(Context context,final String nickName, final String password) {
+    public void onLoginClicked(Context context, final String nickName, final String password) {
+        setContext(context);
         view.onProcessStart();
-        if(!checkConnection()){
-            onLoginFailure("network problem");
-        }else if(nickName.isEmpty()||password.isEmpty()) {
-            onLoginFailure("Logni and password cannot be empty");
-        }else if(lengthPassword(password)<5){
-            onLoginFailure("Password length should be greater than 6");
-        }else {
-            database.onLogin(new User(nickName,password));
+        setUser(nickName, password);
+        if (!ConnectionHelper.checkConnetion()) {
+            onLoginFailure(Config.NETWORK_ERROR);
+        } else if (StringHelper.loginDateIsEmpty(nickName, password)) {
+            onLoginFailure(Config.EMPTY_LOGIN_DATE_ERROR);
+        } else if (!StringHelper.lenghPassword(password)) {
+            onLoginFailure(Config.PASSWORD_LENGH_ERROR);
+        } else {
+            setDatabase(new Database());
+            database.onLogin(user);
         }
     }
 
-    private void onLoginFailure(String message){
+    @Override
+    public boolean isLoggedIn() {
+        return database.getUser() != null;
+    }
+
+    private void onLoginFailure(String message) {
         view.onLoginFailure(message);
         view.onProcessEnd();
     }
 
-    public boolean checkConnection() {
-        //sprawdzenie czy jest połączenie z internetem
-    return true;
-}
-    public int lengthPassword(String password){
-        return  password.length();
-    }
-
-    private void startActivity(Context context,String nick){
-        Intent intent=new Intent(context, TaskActivity.class);
-        intent.putExtra(Config.NICKNAME_NODE,nick);
+    private void startTaskActivity(String nick) {
+        Intent intent = new Intent(context, TaskActivity.class);
+        intent.putExtra(Config.NICKNAME_NODE, nick);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     @Override
     public void onSuccess() {
-        view.onLoginSuccessful("Login succesful");
+        view.onLoginSuccessful(Config.SUCCESS_LOGIN_MESSAGE);
         view.onProcessEnd();
-        startActivity(view.getApplicationContext(),view.nick.getText().toString());
+        startTaskActivity(user.getNickName());
     }
 
     @Override
     public void onFailure() {
-        view.onLoginFailure("The password provided is wrong");
+        view.onLoginFailure(Config.PASSWORD_ERROR);
         view.onProcessEnd();
+    }
+
+    private void setUser(String name, String password) {
+        user.setNickName(name);
+        user.setPassword(password);
+    }
+
+    private void setContext(Context context) {
+        this.context = context;
+    }
+
+    public void setDatabase(Database database) {
+        this.database = database;
+        this.database.setLisner(this);
     }
 }

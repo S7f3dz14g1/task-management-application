@@ -1,12 +1,10 @@
 package com.example.requestapp.ui.fragment.availableTasksFragment;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,24 +14,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.requestapp.R;
-import com.example.requestapp.RecycleViewAdapter;
-import com.example.requestapp.Utils.Config;
+import com.example.requestapp.adapter.OnItemClickListener;
+import com.example.requestapp.adapter.RecycleViewAdapter;
 import com.example.requestapp.model.Task;
+import com.example.requestapp.ui.fragment.editTaskFragment.EditTaskFragment;
 
 import java.util.List;
 
-public class AvailableTasksFragment  extends Fragment implements AvalableTasksFragmentContract.View{
+public class AvailableTasksFragment  extends Fragment implements AvalableTasksFragmentContract.View, OnItemClickListener{
 
     private AvalableTasksFragmentContract.Presenter presenter;
     private RecyclerView recyclerViewLow,recyclerViewMedium,recyclerViewHigh;
-    private ImageView settings;
-    private PopupMenu popupMenu;
-    String nick;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_available_tasks, container, false);
-
         initComponents(view);
 
 
@@ -41,33 +37,31 @@ public class AvailableTasksFragment  extends Fragment implements AvalableTasksFr
     }
 
     private void initComponents(View view) {
-
         recyclerViewLow=view.findViewById(R.id.lowList_A);
         recyclerViewMedium=view.findViewById(R.id.mediumList_A);
         recyclerViewHigh=view.findViewById(R.id.highList_A);
-        settings=view.findViewById(R.id.settingTastk);
 
-        nick=getActivity().getIntent().getStringExtra(Config.NICKNAME_NODE);
         presenter = new AvalableTasksFragmentPresenter(this);
-        popupMenu =new PopupMenu(getContext(),view);
     }
 
     @Override
     public void setListMedium(List<Task> task) {
-        recyclerViewMedium.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
-        recyclerViewMedium.setAdapter(new RecycleViewAdapter(getContext(), task));
+        setList(recyclerViewMedium,task);
     }
 
     @Override
     public void setListHigh(List<Task> task ) {
-        recyclerViewHigh.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
-        recyclerViewHigh.setAdapter(new RecycleViewAdapter(getContext(), task));
+        setList(recyclerViewHigh,task);
     }
 
     @Override
     public void setListLow(List<Task> task ) {
-        recyclerViewLow.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
-        recyclerViewLow.setAdapter(new RecycleViewAdapter(getContext(), task));
+        setList(recyclerViewLow,task);
+    }
+
+    private void setList(RecyclerView recycler,List<Task> task){
+        recycler.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
+        recycler.setAdapter(new RecycleViewAdapter(getContext(), task,this));
     }
 
     @Override
@@ -76,33 +70,17 @@ public class AvailableTasksFragment  extends Fragment implements AvalableTasksFr
     }
 
 
-    public void onClickSettings(){
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSetting();
-            }
-        });
-    }
-    private void showSetting() {
+    @Override
+    public void onItemClick(int position, String background,String descryption) {
+        //przenieść to do prezentera
+        Bundle bundle=new Bundle();
+        bundle.putString("possition",position+"");
+        bundle.putString("type",background+"");
+        bundle.putString("descryption",descryption);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.sett_confirm_execution:
 
-                        return true;
-                    case R.id.sett_cedit:
-
-                        return true;
-                    default:
-
-                        return false;
-                }
-            }
-        });
-        popupMenu.inflate(R.menu.setting_task);
-        popupMenu.show();
+        EditTaskFragment editTaskFragment=  new EditTaskFragment();
+        editTaskFragment.setArguments(bundle);
+        editTaskFragment.show(getActivity().getSupportFragmentManager(),"create dialog");
     }
 }

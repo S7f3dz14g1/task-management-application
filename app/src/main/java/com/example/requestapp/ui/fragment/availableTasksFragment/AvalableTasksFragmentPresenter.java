@@ -1,10 +1,12 @@
 package com.example.requestapp.ui.fragment.availableTasksFragment;
 
+
 import com.example.requestapp.Utils.Config;
 import com.example.requestapp.database.Database;
 import com.example.requestapp.iterator.Lisner;
 import com.example.requestapp.model.AvailableTasks;
 import com.example.requestapp.model.Task;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class AvalableTasksFragmentPresenter extends Lisner implements AvalableTa
     private AvailableTasksFragment view;
     private Database database;
     private AvailableTasks availableTasks;
+    private  String nickName;
 
     public AvalableTasksFragmentPresenter(AvailableTasksFragment view) {
         this.view = view;
@@ -24,9 +27,9 @@ public class AvalableTasksFragmentPresenter extends Lisner implements AvalableTa
     }
 
     private void setListTasks(){
-        database.getListTask(view.nick,Config.LOW);
-        database.getListTask(view.nick,Config.MEDIUM);
-        database.getListTask(view.nick,Config.HIGH);
+        database.getListTask(nickName,Config.LOW);
+        database.getListTask(nickName,Config.MEDIUM);
+        database.getListTask(nickName,Config.HIGH);
     }
     private List<Task> getTaskList(String type, List<String> desryptions){
         List<Task> tasks =new ArrayList<>();
@@ -50,5 +53,4 @@ public class AvalableTasksFragmentPresenter extends Lisner implements AvalableTa
         if(!availableTasks.getList(Config.HIGH).isEmpty())
             view.setListHigh(getTaskList(Config.HIGH,availableTasks.getList(Config.HIGH)));
     }
-
 }

@@ -11,15 +11,17 @@ import java.util.List;
 
 public class ProfileFragmentPresenter extends Lisner implements ProfileFragmentContract.Presenter {
 
-    private ProfileFragment view;
+    private ProfileFragmentContract.View view;
     private Database database;
     private AvailableTasks availableTasks;
+    private String nickName;
 
-    public ProfileFragmentPresenter(ProfileFragment view) {
+    public ProfileFragmentPresenter(ProfileFragmentContract.View view) {
         this.view = view;
-        database=new Database();
+        database = new Database();
         database.setLisner(this);
-        availableTasks =new AvailableTasks();
+        availableTasks = new AvailableTasks();
+        nickName=database.getUserNick();
     }
 
     @Override
@@ -29,7 +31,7 @@ public class ProfileFragmentPresenter extends Lisner implements ProfileFragmentC
     }
 
     @Override
-    public void updatesData(String nickName) {
+    public void updatesData() {
         updateListTasks(nickName);
 
         //sprawdzenie czy jest zapisane zdj jeśli jest to ustawić z bazy jeśli nie ma to dodać standerode
@@ -41,18 +43,19 @@ public class ProfileFragmentPresenter extends Lisner implements ProfileFragmentC
         database.getListTask(nickName, Config.HIGH);
     }
 
-    private void setSizeAvalableTasks(String nickName){
-        view.upDateTextHighPiority(availableTasks.sizeList(Config.HIGH)+"");
-        view.upDateTextLowPiority(availableTasks.sizeList(Config.LOW)+"");
-        view.upDateTextMediumPiority(availableTasks.sizeList(Config.MEDIUM)+"");
+    private void setSizeAvalableTasks(String nickName) {
+        view.upDateTextHighPiority(availableTasks.sizeList(Config.HIGH) + "");
+        view.upDateTextLowPiority(availableTasks.sizeList(Config.LOW) + "");
+        view.upDateTextMediumPiority(availableTasks.sizeList(Config.MEDIUM) + "");
         view.updateNickName(nickName);
-        List<Task>list=new ArrayList<>();
+        List< Task > list = new ArrayList<>();
 //        list.add(new Task("Low",availableTasks.getList("Low").get(0)));
-       // view.updateList(list);//zmienić na zakończnoe
+        // view.updateList(list);//zmienić na zakończnoe
     }
+
     @Override
-    public void setList(String type, List<String> listTasks) {
-        availableTasks.setList(type,listTasks);
-        setSizeAvalableTasks(view.nick);
+    public void setList(String type, List< String > listTasks) {
+        availableTasks.setList(type, listTasks);
+        setSizeAvalableTasks(nickName);
     }
 }

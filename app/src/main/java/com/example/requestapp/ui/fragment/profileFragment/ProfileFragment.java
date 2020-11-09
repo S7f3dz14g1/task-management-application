@@ -15,18 +15,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.requestapp.R;
-import com.example.requestapp.RecycleViewAdapter;
-import com.example.requestapp.Utils.Config;
+import com.example.requestapp.adapter.RecycleViewAdapter;
 import com.example.requestapp.model.Task;
 
 import java.util.List;
 
-public class ProfileFragment extends Fragment implements ProfileFragmentContract.View{
+public class ProfileFragment extends Fragment implements ProfileFragmentContract.View {
 
     private ImageView image;
-    private TextView lowTW,mediumTW,highTW,nickName;
+    private TextView lowTW, mediumTW, highTW, nickNameTW;
     private RecyclerView recyclerView;
-    String nick;
+
 
     private ProfileFragmentContract.Presenter presenter;
 
@@ -34,31 +33,39 @@ public class ProfileFragment extends Fragment implements ProfileFragmentContract
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pofile, container, false);
         initComponents(view);
-        nick=getActivity().getIntent().getStringExtra(Config.NICKNAME_NODE);
-        presenter.updatesData(getActivity().getIntent().getStringExtra(Config.NICKNAME_NODE));
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onImageClicked();
-            }
-        });
+        setPresenter();
+        presenter.updatesData();
+        setOnClickLisners();
         return view;
     }
 
-    private void initComponents(View view) {
-        image=view.findViewById(R.id.imageUser);
-        lowTW=view.findViewById(R.id.sizeLowTask) ;
-        mediumTW=view.findViewById(R.id.sizeMediumTask);
-        highTW=view.findViewById(R.id.sizeHighTask);
-        nickName=view.findViewById(R.id.nickName_TV);
-        recyclerView=view.findViewById(R.id.listOneTasksRV);
+    private void setOnClickLisners() {
+        image.setOnClickListener(imageSetOnClickLisner);
+    }
 
-        presenter=new ProfileFragmentPresenter(this);
+    private View.OnClickListener imageSetOnClickLisner = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.onImageClicked();
+        }
+    };
+
+    private void setPresenter() {
+        presenter = new ProfileFragmentPresenter(this);
+    }
+
+    private void initComponents(View view) {
+        image = view.findViewById(R.id.imageUser);
+        lowTW = view.findViewById(R.id.sizeLowTask);
+        mediumTW = view.findViewById(R.id.sizeMediumTask);
+        highTW = view.findViewById(R.id.sizeHighTask);
+        nickNameTW = view.findViewById(R.id.nickName_TV);
+        recyclerView = view.findViewById(R.id.listOneTasksRV);
     }
 
     @Override
     public void updateNickName(String nick) {
-        nickName.setText(nick);
+        nickNameTW.setText(nick);
     }
 
     @Override
@@ -83,11 +90,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentContract
 
     @Override
     public void showMessage(String string) {
-        Toast.makeText(getContext(),string,Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
     }
 
     @Override
-    public void updateList(List<Task> task) {
+    public void updateList(List< Task > task) {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new RecycleViewAdapter(getContext(), task));
     }

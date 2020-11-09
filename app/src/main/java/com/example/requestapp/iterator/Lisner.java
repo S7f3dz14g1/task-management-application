@@ -23,4 +23,5 @@ public abstract  class Lisner implements Adapter {
  public int getSizeList(String type){
    return 0;
  }
+
 }

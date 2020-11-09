@@ -6,14 +6,15 @@ import java.util.List;
 
 public interface ProfileFragmentContract {
 
-    interface Presenter{
+    interface Presenter {
 
         void onImageClicked();
 
-        void updatesData(String nickName);
+        void updatesData();
 
     }
-    interface  View{
+
+    interface View {
 
         void updateNickName(String nick);
 
@@ -27,7 +28,7 @@ public interface ProfileFragmentContract {
 
         void showMessage(String string);
 
-        void updateList(List<Task> task);
+        void updateList(List< Task > task);
 
     }
 }

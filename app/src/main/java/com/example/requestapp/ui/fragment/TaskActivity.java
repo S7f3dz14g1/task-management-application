@@ -1,23 +1,28 @@
 package com.example.requestapp.ui.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.requestapp.R;
+import com.example.requestapp.adapter.OnItemClickListener;
 import com.example.requestapp.ui.fragment.addTaskFragment.AddTaskFragment;
 import com.example.requestapp.ui.fragment.availableTasksFragment.AvailableTasksFragment;
 import com.example.requestapp.ui.fragment.completedTasksFragment.CompletedTasksFragment;
+import com.example.requestapp.ui.fragment.editTaskFragment.EditTaskFragment;
 import com.example.requestapp.ui.fragment.profileFragment.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends AppCompatActivity  {
 
 
     protected void onCreate(Bundle savedInstanceState) {

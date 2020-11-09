@@ -13,15 +13,16 @@ public class AddTaskFragmentPresenter extends Lisner implements AddTaskFragmentC
     private AddTaskFragment view;
     private Database database;
     private AvailableTasks availableTasks;
+    private String nickName;
 
     public AddTaskFragmentPresenter(AddTaskFragment view){
         this.view=view;
         database=new Database();
         availableTasks=new AvailableTasks();
         database.setLisner(this);
-        database.getListTask(view.nick, Config.LOW);
-        database.getListTask(view.nick, Config.HIGH);
-        database.getListTask(view.nick, Config.MEDIUM);
+        database.getListTask(nickName, Config.LOW);
+        database.getListTask(nickName, Config.HIGH);
+        database.getListTask(nickName, Config.MEDIUM);
     }
 
     @Override
@@ -50,6 +51,8 @@ public class AddTaskFragmentPresenter extends Lisner implements AddTaskFragmentC
     public int getSizeList(String type) {
         return availableTasks.getList(type).size();
     }
+
+
     private void updateListTasks(Task task){
         database.getListTask(task.getNick(),task.getType());
     }

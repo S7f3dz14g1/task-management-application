@@ -25,8 +25,6 @@ public class Database implements DAO {
     private final DatabaseReference databaseTasks;
     private Adapter lisner;
 
-
-
     public Database() {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseTasks = FirebaseDatabase.getInstance().getReference();
@@ -38,7 +36,7 @@ public class Database implements DAO {
 
     @Override
     public void onLogin(final User user) {
-        firebaseAuth.signInWithEmailAndPassword(user.getNickName() + "@app.pl", user.getPassword())
+        firebaseAuth.signInWithEmailAndPassword(user.getNickName().toLowerCase() + "@app.pl", user.getPassword())
                 .addOnSuccessListener(new OnSuccessListener< AuthResult >() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -81,8 +79,9 @@ public class Database implements DAO {
         databaseTasks.child(nick).child(Config.TASKS).child(Config.AVAILABLE).child(type).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int iterator=0;
                 ArrayList<String> tasksList=new ArrayList<>();
+                System.out.println("Test");
+                System.out.println(dataSnapshot);
                 for(DataSnapshot key:dataSnapshot.getChildren()){
                     String[]value= key.getValue().toString().split("=");
                     tasksList.add(value[1].substring(0,value[1].indexOf("}")));
@@ -93,6 +92,17 @@ public class Database implements DAO {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    @Override
+    public FirebaseUser getUser() {
+        return firebaseAuth.getCurrentUser();
+    }
+
+    @Override
+    public String getUserNick() {
+        return "Szfedek";
+       // return firebaseAuth.getCurrentUser().getEmail().split("@")[0];
     }
 
 }
