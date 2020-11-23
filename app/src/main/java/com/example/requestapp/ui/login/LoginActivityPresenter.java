@@ -3,7 +3,7 @@ package com.example.requestapp.ui.login;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.requestapp.Utils.Config;
+import com.example.requestapp.utils.Config;
 import com.example.requestapp.database.Database;
 import com.example.requestapp.iterator.Lisner;
 import com.example.requestapp.model.ConnectionHelper;

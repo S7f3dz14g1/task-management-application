@@ -1,5 +1,7 @@
 package com.example.requestapp.ui.fragment.profileFragment;
 
+import android.net.Uri;
+
 import com.example.requestapp.model.Task;
 
 import java.util.List;
@@ -8,9 +10,11 @@ public interface ProfileFragmentContract {
 
     interface Presenter {
 
-        void onImageClicked();
+        void onImageClicked(Uri uri);
 
         void updatesData();
+
+        void onSignOutClicked();
 
     }
 
@@ -18,7 +22,9 @@ public interface ProfileFragmentContract {
 
         void updateNickName(String nick);
 
-        void upDateImage();
+        void upDateImage(Uri uri);
+
+        void setDefaultImage();
 
         void upDateTextHighPiority(String number);
 
@@ -26,9 +32,14 @@ public interface ProfileFragmentContract {
 
         void upDateTextMediumPiority(String number);
 
+        void setLastCompletedTask(List< Task > task);
+
         void showMessage(String string);
 
-        void updateList(List< Task > task);
+        void showSignOutMessageToast();
 
+        void onProcessStart();
+
+        void onProcessEnd();
     }
 }

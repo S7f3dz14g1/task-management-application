@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityCon
         super.onCreate(savedInstanceState);
         setPresenter();
         if (presenter.isLoggedIn()) {
+            finish();
             startActivity(new Intent(this, TaskActivity.class));
         }
         setContentView(R.layout.activity_login);

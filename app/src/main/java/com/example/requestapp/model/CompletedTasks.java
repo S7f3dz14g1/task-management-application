@@ -5,20 +5,21 @@ import java.util.List;
 
 public class CompletedTasks {
 
-    private List<Task> tasls;
+    private List<Task> taslsList;
 
     public List< Task > getTasls() {
-        return tasls;
+        return taslsList;
     }
 
     public int sizeList(){
-        return tasls.size();
+        return taslsList.size();
     }
+
     public void setTasls(List< Task > tasls) {
-        this.tasls = tasls;
+        this.taslsList = tasls;
     }
 
     public CompletedTasks(){
-        tasls=new ArrayList<>();
+        taslsList=new ArrayList<>();
     }
 }

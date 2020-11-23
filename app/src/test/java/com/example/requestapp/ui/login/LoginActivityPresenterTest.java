@@ -2,7 +2,7 @@ package com.example.requestapp.ui.login;
 
 import android.content.Context;
 
-import com.example.requestapp.Utils.Config;
+import com.example.requestapp.utils.Config;
 import com.example.requestapp.database.Database;
 
 import org.junit.Before;

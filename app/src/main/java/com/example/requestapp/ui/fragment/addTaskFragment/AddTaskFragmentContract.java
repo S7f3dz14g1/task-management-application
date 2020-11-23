@@ -4,14 +4,17 @@ import com.example.requestapp.model.Task;
 
 public interface AddTaskFragmentContract {
 
-    interface Presenter{
+    interface Presenter {
 
         void onAddTaskClicked(Task task);
 
     }
-    interface View{
 
-        void showMessage(String message);
+    interface View {
+
+        void onAddedSuccessfulToast(String message);
+
+        void onAddedFailureToast(String message);
 
     }
 

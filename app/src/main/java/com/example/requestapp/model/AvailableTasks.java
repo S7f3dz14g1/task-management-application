@@ -1,6 +1,6 @@
 package com.example.requestapp.model;
 
-import com.example.requestapp.Utils.Config;
+import com.example.requestapp.utils.Config;
 
 
 import java.util.ArrayList;
@@ -30,4 +30,5 @@ public class AvailableTasks {
     public int sizeList(String type) {
         return avalableTasks.get(type).size();
     }
+
 }

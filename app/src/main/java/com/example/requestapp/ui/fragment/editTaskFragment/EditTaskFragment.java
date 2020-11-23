@@ -2,7 +2,6 @@ package com.example.requestapp.ui.fragment.editTaskFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,7 @@ public class EditTaskFragment extends AppCompatDialogFragment implements EditTas
     private EditTaskFragmentPresenter presenter;
 
     @Override
-    public Dialog onCreateDialog(Bundle saveInstanceState){
+    public Dialog onCreateDialog(final Bundle saveInstanceState){
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=getActivity().getLayoutInflater();
         final View view=inflater.inflate(R.layout.fragment_edit_task,null);
@@ -34,21 +33,39 @@ public class EditTaskFragment extends AppCompatDialogFragment implements EditTas
         builder.setCancelable(true);
         initComponent(view);
         setConponents();
+        setPresenter();
+         Bundle bundle=getArguments();
+         final String key=bundle.getString("type");
+         final String descryption=bundle.getString("descryption");
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickedFinish(new Task(key,
+                        descryption));
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickedEdit(new Task(key,desryption.getText().toString()),desryption.getText().toString());
+            }
+        });
         return builder.create();
+    }
+
+    private void setPresenter() {
+        presenter=new EditTaskFragmentPresenter(this);
     }
 
     private void setConponents() {
         Bundle bundle=getArguments();
-        Drawable.createFromPath(bundle.getString("type"));
-        if(bundle.getString("type").startsWith("Matrix{[1.0677507, 0.0, 0.0][0.0, 1.0677507, -44.0][0.0, 0.0, 1.0]}")){
+        if(bundle.getString("type").startsWith("Low")){
             type.setImageResource(R.drawable.ic_low_priority);
-        }else if(bundle.getString("type").startsWith("Matrix{[1.0706521, 0.0, 0.0][0.0, 1.0706521, -44.0][0.0, 0.0, 1.0]}")){
+        }else if(bundle.getString("type").startsWith("Medium")){
             type.setImageResource(R.drawable.ic_medium_priority);
         }else{
             type.setImageResource(R.drawable.ic_high_priority);
         }
-        System.out.println(R.drawable.ic_low_priority);
-        System.out.println(bundle.getString("type"));
         desryption.setText(bundle.getString("descryption"));
     }
 
@@ -65,17 +82,34 @@ public class EditTaskFragment extends AppCompatDialogFragment implements EditTas
     }
 
     @Override
-    public void lockEdits() {
-        desryption.setFocusable(false);
+    public void lockEditTextDescryption() {
+        desryption.setEnabled(true);
     }
 
     @Override
-    public void unlockEdists() {
-        desryption.setFocusable(true);
+    public void unlockEditTextDescryption() {
+        desryption.setEnabled(false);
+    }
+
+    @Override
+    public void lockButtonSave() {
+        edit.setEnabled(true);
+    }
+
+    @Override
+    public void unlockButtonSave() {
+        edit.setEnabled(false);
     }
 
     @Override
     public void changeNameButton(String name) {
         edit.setText(name);
     }
+
+    @Override
+    public void closeFragment() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+
 }
