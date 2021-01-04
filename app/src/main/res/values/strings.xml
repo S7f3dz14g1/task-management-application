@@ -7,7 +7,7 @@
     <string name="little_priority">Low priority</string>
     <string name="medium_priority">Medium priority</string>
     <string name="big_priority">High priority</string>
-    <string name="zaloguj">Zaloguj</string>
+    <string name="zaloguj">Login</string>
     <string name="nick_name">Nick name</string>
     <string name="password">Password</string>
     <string name="completed_tasks">Completed tasks</string>

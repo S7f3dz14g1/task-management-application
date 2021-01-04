@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RequestApp</string>
+    <string name="confirm_execution">Potwierdź wykonanie</string>
+    <string name="edit">Edytuj</string>
+    <string name="remove">Usuń</string>
+    <string name="add_request">Dodaj zadanie</string>
+    <string name="little_priority">Mały piorytet</string>
+    <string name="medium_priority">Średni piorytet</string>
+    <string name="big_priority">Duży piorytet</string>
+    <string name="zaloguj">Zaloguj</string>
+    <string name="nick_name">Nick</string>
+    <string name="password">Hasło</string>
+    <string name="completed_tasks">Zakończone zadania</string>
+    <string name="add">Dodaj</string>
+    <string name="description">Opis</string>
+    <string name="choose_priority">Zmień piorytet</string>
+    <string name="low">Mały</string>
+    <string name="medium">Średni</string>
+    <string name="high">Duży</string>
+    <string name="proflie">Profil</string>
+    <string name="task">Zadanie</string>
+    <string name="nick">Nick</string>
+    <string name="finish">Zakończone</string>
+    <string name="again">Powtórz zadanie</string>
+    <string name="descryption">Opis</string>
+    <string name="end_date">Data zakończenia</string>
+</resources>

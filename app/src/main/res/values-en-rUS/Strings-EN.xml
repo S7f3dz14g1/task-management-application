@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">RequestApp</string>
+        <string name="confirm_execution">Confirm execution</string>
+        <string name="edit">Edit</string>
+        <string name="remove">Remove</string>
+        <string name="add_request">Add request</string>
+        <string name="little_priority">Low priority</string>
+        <string name="medium_priority">Medium priority</string>
+        <string name="big_priority">High priority</string>
+        <string name="zaloguj">Login</string>
+        <string name="nick_name">Nick name</string>
+        <string name="password">Password</string>
+        <string name="completed_tasks">Completed tasks</string>
+        <string name="add">Add</string>
+        <string name="description">Description</string>
+        <string name="choose_priority">Choose priority</string>
+        <string name="low">Low</string>
+        <string name="medium">Medium</string>
+        <string name="high">High</string>
+        <string name="proflie">Proflie</string>
+        <string name="task">Task</string>
+        <string name="nick">Nick</string>
+        <string name="finish">Finish</string>
+        <string name="again">Do it again</string>
+        <string name="descryption">Descryption</string>
+        <string name="end_date">End date:</string>
+
+</resources>
