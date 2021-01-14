@@ -25,4 +25,7 @@
     <string name="again">Powtórz zadanie</string>
     <string name="descryption">Opis</string>
     <string name="end_date">Data zakończenia</string>
+    <string name="last_completed_task">Ostatnie zakończone zadanie.</string>
+    <string name="available_tasks">Dostępne zadania</string>
+
 </resources>

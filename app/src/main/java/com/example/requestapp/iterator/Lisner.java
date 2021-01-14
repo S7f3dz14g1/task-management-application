@@ -1,6 +1,5 @@
 package com.example.requestapp.iterator;
 
-
 import android.net.Uri;
 
 import com.example.requestapp.model.Task;

@@ -2,8 +2,9 @@ package com.example.requestapp.utils;
 
 public class Config {
     public static final String DESCRYPTION = "descryption";
+    public static final String CREATE_DIALOG = "create dialog";
     public static final String NICKNAME_NODE = "Nickname";
-    public static final String END_EMEIL = "@app.pl";
+    public static final String END_EMAIL = "@app.pl";
     public static final String TASKS = "Tasks";
     public static final String TYPE = "type";
     public static final String POSSITION = "possition";
@@ -25,4 +26,7 @@ public class Config {
     public static final String MESSAGE_EMPTY_FIELDS = "Fill in the fields.";
     public static final String MESSAGE_TO_LONG_DESCRIPTION = "Description should be shorter than 150 chars.";
     public static final String USER_LOGOUT = "User logout";
+    public static final String LOGIN_EXCEPTION = "The password is invalid or the user does not have a password.";
+    public static final String URL_IMAGE = "image/";
+    public static final String NEW_USER = "Hello new user";
 }

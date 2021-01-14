@@ -1,7 +1,6 @@
 package com.example.requestapp.ui.fragment.profileFragment;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,10 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.requestapp.R;
 import com.example.requestapp.adapter.OnItemClickListener;
-import com.example.requestapp.utils.Config;
 import com.example.requestapp.adapter.RecycleViewAdapter;
 import com.example.requestapp.model.Task;
 import com.example.requestapp.ui.login.LoginActivity;
+import com.example.requestapp.utils.Config;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

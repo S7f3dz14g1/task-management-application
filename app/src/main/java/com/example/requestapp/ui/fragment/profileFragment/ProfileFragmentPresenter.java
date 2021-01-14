@@ -2,13 +2,13 @@ package com.example.requestapp.ui.fragment.profileFragment;
 
 import android.net.Uri;
 
-import com.example.requestapp.model.CompletedTasks;
-import com.example.requestapp.model.Task;
-import com.example.requestapp.utils.Config;
 import com.example.requestapp.database.Database;
 import com.example.requestapp.iterator.Lisner;
 import com.example.requestapp.model.AvailableTasks;
+import com.example.requestapp.model.CompletedTasks;
 import com.example.requestapp.model.KeyHelper;
+import com.example.requestapp.model.Task;
+import com.example.requestapp.utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +94,7 @@ public class ProfileFragmentPresenter extends Lisner implements ProfileFragmentC
     @Override
     public void setCommpletetTaskList(List< Task > taskList) {
         completedTasks.setTasls(taskList);
-        List<Task> task=new ArrayList<>();
+        List< Task > task=new ArrayList<>();
         if(taskList.size()!=0)
             task.add(completedTasks.getTasls().get(completedTasks.sizeList()-1));
         view.setLastCompletedTask(task);

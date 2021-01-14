@@ -45,7 +45,7 @@ public class Database implements DAO {
 
     @Override
     public void onLogin(final User user) {
-        firebaseAuth.signInWithEmailAndPassword(user.getNickName().toLowerCase() + "@app.pl", user.getPassword())
+        firebaseAuth.signInWithEmailAndPassword(user.getNickName().toLowerCase() + Config.END_EMAIL, user.getPassword())
                 .addOnSuccessListener(new OnSuccessListener< AuthResult >() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -55,7 +55,7 @@ public class Database implements DAO {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if (e.getMessage().contains("The password is invalid or the user does not have a password.")) {
+                if (e.getMessage().contains(Config.LOGIN_EXCEPTION)) {
                     lisner.onFailure();
                 } else {
                     signup(user);
@@ -67,7 +67,7 @@ public class Database implements DAO {
 
     @Override
     public void signup(User user) {
-        firebaseAuth.createUserWithEmailAndPassword(user.getNickName() + Config.END_EMEIL, user.getPassword())
+        firebaseAuth.createUserWithEmailAndPassword(user.getNickName() + Config.END_EMAIL, user.getPassword())
                 .addOnSuccessListener(new OnSuccessListener< AuthResult >() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -93,7 +93,6 @@ public class Database implements DAO {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList< String > tasksList = new ArrayList<>();
-
                 for (DataSnapshot key : dataSnapshot.getChildren()) {
                     String[] value = key.getValue().toString().split("=");
                     tasksList.add(value[1].substring(0, value[1].indexOf("}")));
@@ -126,26 +125,25 @@ public class Database implements DAO {
     }
 
     private void updateListWhenItemIsDeleted( final String type, final String description) {
-
         databaseTasks.child(getUserNick()).child(Config.TASKS).child(Config.AVAILABLE).child(type).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList< String > tasksList = new ArrayList<>();//lista po usunięciu
-                int i = 0;//ilość iteracji w liście
+                ArrayList< String > tasksList = new ArrayList<>();
+                int i = 0;
                 for (DataSnapshot key : dataSnapshot.getChildren()) {
-                    String n = (key.getValue().toString().split("=")[1]);///pobranie opius zdj
+                    String n = (key.getValue().toString().split("=")[1]);
                     String opis = n.substring(0, n.length() - 1);
-                    if (!opis.equals(description)) {//jeśli nie jest ten który chcemy usunąć to zapisuje do listy
+                    if (!opis.equals(description)) {
                         String[] value = key.getValue().toString().split("=");
                         tasksList.add(value[1].substring(0, value[1].indexOf("}")));
                     }
                     i++;
                 }
                 i = 0;
-                for (String s : tasksList)//aktualizowanie listy w firebase
+                for (String s : tasksList)
                     addAvailableTask(new Task(getUserNick(), type, s), i++);
-                deleteAvelableTask(type, i + "");//usunięcie ostatniego elementu
-                lisner.setList(type, tasksList);//ustawienie listy
+                deleteAvelableTask(type, i + "");
+                lisner.setList(type, tasksList);
             }
 
             @Override
@@ -164,7 +162,13 @@ public class Database implements DAO {
 
     @Override
     public String getUserNick() {
-        return StringHelper.getNickName(firebaseAuth.getCurrentUser().getEmail());
+        try{
+            return StringHelper.getNickName(firebaseAuth.getCurrentUser().getEmail());
+        }catch (Exception e){
+
+        }
+        return Config.NEW_USER;
+
     }
 
     @Override

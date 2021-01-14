@@ -24,4 +24,6 @@
     <string name="again">Do it again</string>
     <string name="descryption">Descryption</string>
     <string name="end_date">End date:</string>
+    <string name="last_completed_task">Last completed Task.</string>
+    <string name="available_tasks">Available tasks</string>
 </resources>
